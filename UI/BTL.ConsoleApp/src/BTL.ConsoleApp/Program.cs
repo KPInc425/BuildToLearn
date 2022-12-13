@@ -1,10 +1,22 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!, please type what you would like me to echo");
+﻿var serviceProvider = new ServiceCollection()
+    .AddLogging(options => 
+    {
+        options.AddConsole();
+        options.SetMinimumLevel(LogLevel.Debug);
+    })
+    .AddSingleton<INextNumberGenerator, NextNumberGenerator>()
+    .AddSingleton<IUserGuessProcessor, UserGuessProcessor>()
+    .AddSingleton<App>()
+    .BuildServiceProvider();
 
+var logger = serviceProvider.GetService<ILoggerFactory>()
+    .CreateLogger<Program>();
 
-var userInput = "";
+logger.LogDebug("Starting application");
 
-userInput = Console.ReadLine();
+//do the actual work here
+var app = serviceProvider.GetService<App>();
+app.RunGame();
 
-Console.WriteLine($"Input was: { userInput }");
+logger.LogDebug("All done!");
 

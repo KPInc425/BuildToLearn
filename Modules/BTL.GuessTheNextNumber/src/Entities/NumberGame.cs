@@ -1,4 +1,4 @@
-namespace BTL.GuessTheNextNumber;
+namespace BTL.GuessTheNextNumber.Entities;
 public class NumberGame
 {
     private short _currentNumber = -1; 
