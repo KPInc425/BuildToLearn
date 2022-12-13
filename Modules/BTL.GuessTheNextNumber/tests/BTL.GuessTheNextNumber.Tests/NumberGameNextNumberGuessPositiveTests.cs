@@ -1,0 +1,99 @@
+namespace BTL.GuessTheNextNumber.Entities;
+
+public class NumberGameNextNumberGuessPositiveTests
+{
+
+
+    [Fact]
+    public void ProcessUserGuessOfNextNumberWithValidValues()
+    {
+        // arrange 
+        var playerName = "Jackie Jones";
+        var highLowValue = HighLowValue.High;
+
+        INextNumberGenerator nextNumberGenerator = Substitute.For<INextNumberGenerator>();
+        NumberGame myGame = Substitute.For<NumberGame>("Jennie Jones");
+
+        nextNumberGenerator.GenerateNextNumber().Returns<short>((short)8);
+        myGame.CurrentNumber.Returns<short>((short)5);
+        IUserGuessProcessor userGuessProcessor = new UserGuessProcessor();
+        
+        // act
+        myGame.Score.Should().Be(0);
+        var isCorrect = myGame.ProcessUserGuess(userGuessProcessor, nextNumberGenerator, HighLowValue.High);
+
+        // assert
+        isCorrect.Should().BeTrue("User guess lower for the next number");
+        myGame.Score.Should().Be(1);
+    }
+
+    [Fact]
+    public void ProcessUserGuessOfNextNumberWithValidValuesLow()
+    {
+        // arrange 
+        var playerName = "Jackie Jones";
+        var highLowValue = HighLowValue.Low;
+
+        INextNumberGenerator nextNumberGenerator = Substitute.For<INextNumberGenerator>();
+        NumberGame myGame = Substitute.For<NumberGame>("Jennie Jones");
+
+        nextNumberGenerator.GenerateNextNumber().Returns<short>((short)5);
+        myGame.CurrentNumber.Returns<short>((short)8);
+        IUserGuessProcessor userGuessProcessor = new UserGuessProcessor();
+        
+        // act
+        myGame.Score.Should().Be(0);
+        var isCorrect = myGame.ProcessUserGuess(userGuessProcessor, nextNumberGenerator, highLowValue);
+
+        // assert
+        isCorrect.Should().BeTrue("User guess lower for the next number");
+        myGame.Score.Should().Be(1);
+    }
+
+    [Fact]
+    public void ProcessUserGuessOfNextNumberWithValidValuesHigh()
+    {
+        // arrange 
+        var playerName = "Jackie Jones";
+        var highLowValue = HighLowValue.High;
+
+        INextNumberGenerator nextNumberGenerator = Substitute.For<INextNumberGenerator>();
+        NumberGame myGame = Substitute.For<NumberGame>("Jennie Jones");
+
+        nextNumberGenerator.GenerateNextNumber().Returns<short>((short)8);
+        myGame.CurrentNumber.Returns<short>((short)5);
+        IUserGuessProcessor userGuessProcessor = new UserGuessProcessor();
+        
+        // act
+        myGame.Score.Should().Be(0);
+        var isCorrect = myGame.ProcessUserGuess(userGuessProcessor, nextNumberGenerator, highLowValue);
+
+        // assert
+        isCorrect.Should().BeTrue("User guess lower for the next number");
+        myGame.Score.Should().Be(1);
+    }
+
+    [Fact]
+    public void ProcessUserGuessOfNextNumberWithValidValuesSame()
+    {
+        // arrange 
+        var playerName = "Jackie Jones";
+        var highLowValue = HighLowValue.Same;
+
+        INextNumberGenerator nextNumberGenerator = Substitute.For<INextNumberGenerator>();
+        NumberGame myGame = Substitute.For<NumberGame>("Jennie Jones");
+
+        nextNumberGenerator.GenerateNextNumber().Returns<short>((short)8);
+        myGame.CurrentNumber.Returns<short>((short)8);
+        IUserGuessProcessor userGuessProcessor = new UserGuessProcessor();
+        
+        // act
+        myGame.Score.Should().Be(0);
+        var isCorrect = myGame.ProcessUserGuess(userGuessProcessor, nextNumberGenerator, highLowValue);
+
+        // assert
+        isCorrect.Should().BeTrue("User guessed same for the next number");
+        myGame.Score.Should().Be(2);
+    }
+
+}
